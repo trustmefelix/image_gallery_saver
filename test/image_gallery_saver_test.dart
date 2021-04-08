@@ -8,10 +8,10 @@ void main() {
 
   const MethodChannel channel = MethodChannel('image_gallery_saver');
   final List<MethodCall> log = <MethodCall>[];
-  bool response;
+  bool? response;
 
-  channel.setMockMethodCallHandler((MethodCall methodCall) async {
-    log.add(methodCall);
+  channel.setMockMethodCallHandler((MethodCall? methodCall) async {
+    log.add(methodCall!);
     return response;
   });
 
@@ -19,11 +19,10 @@ void main() {
     log.clear();
   });
 
-
   test('saveImageToGallery test', () async {
     response = true;
-    Uint8List imageBytes = Uint8List(16);
-    final bool result = await ImageGallerySaver.saveImage(imageBytes);
+    final Uint8List imageBytes = Uint8List(16);
+    final dynamic result = await ImageGallerySaver.saveImage(imageBytes);
     expect(
       log,
       <Matcher>[
@@ -31,11 +30,10 @@ void main() {
           'imageBytes': imageBytes,
           'quality': 80,
           'name': null,
-          "isReturnImagePathOfIOS": false
+          'isReturnImagePathOfIOS': false
         })
       ],
     );
     expect(result, response);
   });
-
 }
